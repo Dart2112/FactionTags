@@ -1,0 +1,5 @@
+name: FactionTags
+version: ${project.version}
+main: net.lapismc.factiontags.FactionTags
+depend: [Factions]
+authors: [dart2112]
