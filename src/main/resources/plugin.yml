@@ -1,8 +1,8 @@
 name: FactionTags
 version: ${project.version}
 main: net.lapismc.factiontags.FactionTags
-depend: [Factions]
+depend: [Factions, MassiveCore]
 authors: [dart2112]
 commands:
   factiontags:
-    description: Reload faction tags.
+    description: Reload faction tags

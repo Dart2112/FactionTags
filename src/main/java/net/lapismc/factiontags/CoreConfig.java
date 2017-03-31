@@ -1,61 +1,49 @@
 package net.lapismc.factiontags;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class CoreConfig
-{
-  protected final FileConfiguration config;
-  protected final File configFile;
-  protected final Logger logger;
-  
-  public CoreConfig(JavaPlugin plugin)
-  {
-    this(plugin, "config.yml");
-  }
-  
-  public CoreConfig(JavaPlugin plugin, String fileName)
-  {
-    this.logger = plugin.getLogger();
-    plugin.getDataFolder().mkdirs();
-    this.configFile = new File(plugin.getDataFolder(), fileName);
-    if (!this.configFile.exists()) {
-      try
-      {
-        this.configFile.createNewFile();
-      }
-      catch (IOException e)
-      {
-        plugin.getLogger().log(Level.SEVERE, "Could not create " + fileName, e);
-      }
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+
+public abstract class CoreConfig {
+
+    final FileConfiguration config;
+
+    CoreConfig(JavaPlugin plugin) {
+        this(plugin, "config.yml");
     }
-    this.config = YamlConfiguration.loadConfiguration(this.configFile);
-    
-    setDefaults();
-    try
-    {
-      this.config.save(this.configFile);
+
+    private CoreConfig(JavaPlugin plugin, String fileName) {
+        plugin.getDataFolder().mkdirs();
+        File configFile = new File(plugin.getDataFolder(), fileName);
+        if (!configFile.exists()) {
+            try {
+                configFile.createNewFile();
+            } catch (IOException e) {
+                plugin.getLogger().log(Level.SEVERE, "Could not create " + fileName, e);
+            }
+        }
+        this.config = YamlConfiguration.loadConfiguration(configFile);
+
+        setDefaults();
+        try {
+            this.config.save(configFile);
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, "Could not save " + fileName, e);
+        }
+        loadSettings();
     }
-    catch (IOException e)
-    {
-      plugin.getLogger().log(Level.SEVERE, "Could not save " + fileName, e);
+
+    protected abstract void setDefaults();
+
+    protected abstract void loadSettings();
+
+    void setDefault(String setting, Object defaultValue) {
+        if (!this.config.contains(setting)) {
+            this.config.set(setting, defaultValue);
+        }
     }
-    loadSettings();
-  }
-  
-  protected abstract void setDefaults();
-  
-  protected abstract void loadSettings();
-  
-  protected void setDefault(String setting, Object defaultValue)
-  {
-    if (!this.config.contains(setting)) {
-      this.config.set(setting, defaultValue);
-    }
-  }
 }
