@@ -1,11 +1,11 @@
 package net.lapismc.factiontags;
 
-import com.massivecraft.factions.chat.ChatTagAbstract;
+import com.massivecraft.factions.chat.ChatTag;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
 import org.bukkit.command.CommandSender;
 
-public class ChatTagSuffix extends ChatTagAbstract {
+public class ChatTagSuffix extends ChatTag {
     private static ChatTagSuffix i = new ChatTagSuffix();
 
     private ChatTagSuffix() {
