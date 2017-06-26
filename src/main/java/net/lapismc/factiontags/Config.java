@@ -4,8 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Config extends CoreConfig {
-    static String TAG_PREFIX;
-    static String TAG_SUFFIX;
+    String TAG_PREFIX;
+    String TAG_SUFFIX;
 
     Config(JavaPlugin plugin) {
         super(plugin);

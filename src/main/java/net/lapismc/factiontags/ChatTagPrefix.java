@@ -1,28 +1,35 @@
 package net.lapismc.factiontags;
 
-import com.massivecraft.factions.chat.ChatTag;
+import com.dthielke.herochat.ChannelChatEvent;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
-import org.bukkit.command.CommandSender;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
-public class ChatTagPrefix extends ChatTag {
-    private static ChatTagPrefix i = new ChatTagPrefix();
+public class ChatTagPrefix implements Listener {
 
-    private ChatTagPrefix() {
-        super("factions_prefix");
+    private Config config;
+
+    ChatTagPrefix(Plugin p, Config config) {
+        Bukkit.getPluginManager().registerEvents(this, p);
+        this.config = config;
     }
 
-    static ChatTagPrefix get() {
-        return i;
+    @EventHandler
+    public void onPlayerChat(ChannelChatEvent e) {
+        Player p = e.getSender().getPlayer();
+        e.setFormat(e.getFormat().replace("{tags_prefix}", getReplacement(p)));
     }
 
-    public String getReplacement(CommandSender sender, CommandSender recipient) {
+    private String getReplacement(Player sender) {
         MPlayer usender = MPlayer.get(sender);
-
         Faction faction = usender.getFaction();
         if (faction.isNone()) {
             return "";
         }
-        return Config.TAG_PREFIX;
+        return config.TAG_PREFIX;
     }
 }

@@ -4,10 +4,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class FactionTags extends JavaPlugin {
 
+    Config config = new Config(this);
+
     public void onEnable() {
         if (getServer().getPluginManager().getPlugin("Factions") != null) {
-            ChatTagSuffix.get().setActive(true);
-            ChatTagPrefix.get().setActive(true);
+            new ChatTagSuffix(this, config);
+            new ChatTagPrefix(this, config);
         }
     }
 }

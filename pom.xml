@@ -76,6 +76,14 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>com.dthielke</groupId>
+            <artifactId>herochat</artifactId>
+            <version>5.6.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HeroChat.jar</systemPath>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.12-R0.1-SNAPSHOT</version>
